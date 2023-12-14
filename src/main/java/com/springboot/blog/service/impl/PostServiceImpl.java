@@ -31,7 +31,6 @@ public class PostServiceImpl implements PostService {
 	public PostDto createPost(PostDto postDto) {
 
 		// convert DTO to entity
-
 		Post post = mapToEntity(postDto);
 		Post newPost = postRepository.save(post);
 
@@ -40,6 +39,8 @@ public class PostServiceImpl implements PostService {
 		return postResponse;
 	}
 
+
+
 	@Override
 	public PostResponse getAllPosts(int pageNo, int pageSize, String sortBy, String sortDir) {
 
@@ -47,7 +48,7 @@ public class PostServiceImpl implements PostService {
 				: Sort.by(sortBy).descending();
 
 		// create pageable instance
-		Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+		Pageable pageable = PageRequest.of(pageNo, pageSize, sort);	
 
 		Page<Post> posts = postRepository.findAll(pageable);
 		// get content for page object
@@ -104,16 +105,9 @@ public class PostServiceImpl implements PostService {
 		return postDto;
 	}
 
-	// convert DTO to entity
 	private Post mapToEntity(PostDto postDto) {
-		// converting Dto to Entity using ModelMapper
-		Post post = mapper.map(postDto, Post.class);
-
-		// manually converting DTO to Entity
-//        Post post = new Post();
-//        post.setTitle(postDto.getTitle());
-//        post.setDescription(postDto.getDescription());
-//        post.setContent(postDto.getContent());
+		// TODO Auto-generated method stub
+		Post post =mapper.map(postDto,Post.class);
 		return post;
 	}
 }

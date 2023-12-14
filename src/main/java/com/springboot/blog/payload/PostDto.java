@@ -3,6 +3,7 @@ package com.springboot.blog.payload;
 
 import java.util.Set;
 
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -11,6 +12,8 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
+
+
 public class PostDto {
     private long id;
 

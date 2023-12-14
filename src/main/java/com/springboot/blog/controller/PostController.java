@@ -1,20 +1,29 @@
 package com.springboot.blog.controller;
 
-import com.springboot.blog.payload.PostDto;
+import javax.validation.Valid;
 
 
-import com.springboot.blog.payload.PostResponse;
-import com.springboot.blog.service.PostService;
-import com.springboot.blog.utils.AppConstants;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+import com.springboot.blog.payload.PostDto;
+import com.springboot.blog.payload.PostResponse;
+import com.springboot.blog.service.PostService;
+import com.springboot.blog.utils.AppConstants;
 
 @RestController
 @RequestMapping("/api/posts")
+
 public class PostController {
 
     private PostService postService;
@@ -25,7 +34,7 @@ public class PostController {
 
     //@PreAuthorize("hasRole('ADMIN_ROLE')")
     // create blog post rest api
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto){
         return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
     }
@@ -47,7 +56,7 @@ public class PostController {
         return ResponseEntity.ok(postService.getPostById(id));
     }
 
-   // @PreAuthorize("hasRole('ADMIN_ROLE')")
+    @PreAuthorize("hasRole('ADMIN_ROLE')")
     // update post by id rest api
     @PutMapping("/{id}")
     public ResponseEntity<PostDto> updatePost(@Valid @RequestBody PostDto postDto, @PathVariable(name = "id") long id){
@@ -57,7 +66,7 @@ public class PostController {
        return new ResponseEntity<>(postResponse, HttpStatus.OK);
     }
 
-    //@PreAuthorize("hasRole('ADMIN_ROLE')")
+    @PreAuthorize("hasRole('ADMIN_ROLE')")
     // delete post rest api
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePost(@PathVariable(name = "id") long id){
